@@ -254,7 +254,11 @@ void JuncTekKGF::loop()
 {
   const unsigned long start_time = millis();
 
-  ESP_LOGD("JunkTekKGF", "{%lu}", start_time);
+  if (!this->last_stats_) {
+    ESP_LOGD("JunkTekKGF", "{%lu} EmptyLastStats", start_time);
+  } else {
+    ESP_LOGD("JunkTekKGF", "{%lu} LastStats=%lu", start_time, this->last_stats_);
+  }
 
   if (!this->last_settings_ || (*this->last_settings_ + (30 * 1000)) < start_time)
   {
