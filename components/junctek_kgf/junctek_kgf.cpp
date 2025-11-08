@@ -54,6 +54,7 @@ void JuncTekKGF::dump_config()
   ESP_LOGCONFIG(TAG, "junctek_kgf:");
   ESP_LOGCONFIG(TAG, "  address: %d", this->address_);
   ESP_LOGCONFIG(TAG, "  invert_current: %s", this->invert_current_ ? "True" : "False");
+  ESP_LOGCONFIG(TAG, "  additional_debugging: true");
 }
 
 void JuncTekKGF::handle_settings(const char* buffer)
@@ -222,6 +223,7 @@ bool JuncTekKGF::readline()
           break;
         case '\r': // Return on CR
           this->line_pos_ = 0;  // Reset position index ready for next time
+          ESP_LOGD("JunkTekKGF", "Readline: %s", $this->line_pos_);
           return true;
         default:
           if (this->line_pos_ < MAX_LINE_LEN - 1)
@@ -232,6 +234,7 @@ bool JuncTekKGF::readline()
       }
     }
   }
+  ESP_LOGD("JunkTekKGF", "Readline failed!");
   return false;
 }
 
