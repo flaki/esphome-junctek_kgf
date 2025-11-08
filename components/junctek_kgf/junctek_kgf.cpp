@@ -257,7 +257,7 @@ void JuncTekKGF::loop()
   if (!this->last_stats_) {
     ESP_LOGD("JunkTekKGF", "{%lu} EmptyLastStats", start_time);
   } else {
-    ESP_LOGD("JunkTekKGF", "{%lu} LastStats=%lu", start_time, this->last_stats_);
+    ESP_LOGD("JunkTekKGF", "{%lu} LastStats=%lu; NextUpdate=%lu", start_time, this->last_stats_, *this->last_stats_ + (10 * 1000));
   }
 
   if (!this->last_settings_ || (*this->last_settings_ + (30 * 1000)) < start_time)
@@ -266,7 +266,7 @@ void JuncTekKGF::loop()
     char buffer[20];
     sprintf(buffer, ":R51=%d,2,1,\r\n", this->address_);
     write_str(buffer);
-    ESP_LOGD("JunkTekKGF", "- Request settings:", buffer);
+    ESP_LOGD("JunkTekKGF", "- Request settings: %s", buffer);
   }
 
   if (!this->last_stats_ || (*this->last_stats_ + (10 * 1000)) < start_time)
@@ -275,7 +275,7 @@ void JuncTekKGF::loop()
     char buffer[20];
     sprintf(buffer, ":R50=%d,2,1,\r\n", this->address_);
     write_str(buffer);
-    ESP_LOGD("JunkTekKGF", "- Request stats:", buffer);
+    ESP_LOGD("JunkTekKGF", "- Request stats: %s", buffer);
   }
 
   if (readline())
