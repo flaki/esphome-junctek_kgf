@@ -223,7 +223,7 @@ bool JuncTekKGF::readline()
           break;
         case '\r': // Return on CR
           this->line_pos_ = 0;  // Reset position index ready for next time
-          ESP_LOGD("JunkTekKGF", "Readline: %s", $this->line_pos_);
+          ESP_LOGD("JunkTekKGF", "Readline: %s", this->line_pos_);
           return true;
         default:
           if (this->line_pos_ < MAX_LINE_LEN - 1)
